@@ -42,4 +42,28 @@ Account <- R6::R6Class("Account",
   )
 )
 
+GiroAccount <- R6::R6Class("GiroAccount",
+  inherit = Account,
+  public = list(
+    limit = NULL,
+    overdraft_fee = 0.08,
+    initialize = function(limit = 0) {
+      self$limit <- limit
+      self$balance <- 0
+    },
+    withdraw = function(amount) {
+      checkmate::assert_integerish(amount, lower = 0, any.missing = FALSE, len = 1)
+      if (amount > self$balance) {
+        amount <- amount * (1 + self$overdraft_fee)
+        if (abs(self$balance - amount) > self$limit) {
+          stop("The withdrawal would exceed the overdraft limit")
+        }
+      }
+      self$balance <- self$balance - amount
+    }
+  )
+)
+
+
+
 
