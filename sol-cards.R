@@ -3,8 +3,7 @@ library(R6)
 
 deck <- R6Class("bavarian_deck", list(
   cards = NULL,
-  initialize = function(seed = NULL) {
-    checkmate::assert_number(seed, null.ok = TRUE)
+  initialize = function() {
     farbe <- c("G", "H", "E", "S")
     wert <- c(6:10, "U", "O", "K", "A")
     cards <- paste0(rep(farbe, each = 9), rep(wert, times = 4))
