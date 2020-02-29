@@ -1,0 +1,15 @@
+context("R6 Account")
+
+test_that("Withdraw and deposit methods work correctly", {
+  my_account <- Account$new()
+  expect_equal(my_account$balance, 0)
+  my_account$deposit(1000)
+  expect_equal(my_account$balance, 1000)
+  my_account$deposit(2000)
+  my_account$withdraw(1500)
+  expect_equal(my_account$balance, 1500)
+  expect_error(my_account$deposit(-1000), "is not >= 0")
+  expect_error(my_account$deposit(10.5), "not close to an integer")
+  expect_error(my_account$withdraw(-1000), "is not >= 0")
+  expect_error(my_account$withdraw(10.5), "not close to an integer")
+})
