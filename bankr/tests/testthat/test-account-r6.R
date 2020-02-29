@@ -30,3 +30,21 @@ test_that("Withdraw and deposit methods work correctly", {
   expect_error(my_giro$withdraw(-1000), "is not >= 0")
   expect_error(my_giro$withdraw(10.5), "not close to an integer")
 })
+
+
+context("R6 SafeAccount")
+
+test_that("Withdraw and deposit methods work correctly", {
+
+  my_safeaccount <- SafeAccount$new()
+  expect_equal(my_safeaccount$withdraw, 0)
+  my_safeaccount$withdraw <- 500
+  expect_equal(my_safeaccount$withdraw, -500)
+  my_safeaccount$deposit <- 1500
+  expect_equal(my_safeaccount$withdraw, 1000)
+
+  expect_error(my_safeaccount$deposit <- -1000, "is not >= 0")
+  expect_error(my_safeaccount$deposit <- 10.5 , "not close to an integer")
+  expect_error(my_safeaccount$withdraw <- -1000, "is not >= 0")
+  expect_error(my_safeaccount$withdraw <- 10.5, "not close to an integer")
+})

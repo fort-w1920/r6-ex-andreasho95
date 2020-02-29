@@ -64,6 +64,34 @@ GiroAccount <- R6::R6Class("GiroAccount",
   )
 )
 
+SafeAccount <- R6::R6Class("SafeAccount",
+  private = list(
+    .balance = NULL
+  ),
+  public = list(
+    initialize = function() {
+      private$.balance <- 0
+    }
+  ),
+  active = list(
+    withdraw = function(amount) {
+      if (missing(amount)) {
+        private$.balance
+      } else {
+        checkmate::assert_integerish(amount, lower = 0, any.missing = FALSE, len = 1)
+        private$.balance <- private$.balance - amount
+      }
+    },
+    deposit = function(amount) {
+      if (missing(amount)) {
+        private$.balance
+      } else {
+        checkmate::assert_integerish(amount, lower = 0, any.missing = FALSE, len = 1)
+        private$.balance <- private$.balance + amount
+      }
+    }
+  )
+)
 
 
 
