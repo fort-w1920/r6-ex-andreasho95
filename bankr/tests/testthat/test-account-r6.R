@@ -29,6 +29,9 @@ test_that("Withdraw and deposit methods work correctly", {
   expect_error(my_giro$deposit(10.5), "not close to an integer")
   expect_error(my_giro$withdraw(-1000), "is not >= 0")
   expect_error(my_giro$withdraw(10.5), "not close to an integer")
+  my_giro$deposit(1040)
+  my_giro$withdraw(700)
+  expect_equal(my_giro$balance, -216)
 })
 
 
